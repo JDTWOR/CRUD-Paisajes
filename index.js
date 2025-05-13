@@ -1,22 +1,29 @@
 const express = require('express');
-const path = require('path')
+const path = require('path');
+const connectDB = require('./config/database');
+const paisajeRoutes = require('./routes/paisajeRoutes');
 
 const app = express();
+const port = process.env.PORT || 8080;
 
-const port = parseInt(process.env.PORT) || process.argv[3] || 8080;
+// Conectar a la base de datos
+connectDB();
 
-app.use(express.static(path.join(__dirname, 'public')))
-  .set('views', path.join(__dirname, 'views'))
-  .set('view engine', 'ejs');
+// Middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
 
+// Configuración de vistas
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+// Rutas
+app.use('/paisajes', paisajeRoutes);
 app.get('/', (req, res) => {
-  res.render('index');
-});
-
-app.get('/api', (req, res) => {
-  res.json({"msg": "Hello world"});
+  res.redirect('/paisajes');
 });
 
 app.listen(port, () => {
-  console.log(`Listening on http://localhost:${port}`);
-})
+  console.log(`Servidor corriendo en http://localhost:${port}`);
+});
