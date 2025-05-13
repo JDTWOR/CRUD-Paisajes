@@ -1,7 +1,7 @@
 {
-  "name": "node-express-web",
+  "name": "express-web",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is a simple hello world express.js server.",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
@@ -16,5 +16,13 @@
   },
   "devDependencies": {
     "nodemon": "^3.0.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JDTWOR/CRUD-Paisajes.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JDTWOR/CRUD-Paisajes/issues"
+  },
+  "homepage": "https://github.com/JDTWOR/CRUD-Paisajes#readme"
 }
