@@ -33,13 +33,32 @@ exports.editarPaisajeForm = async (req, res) => {
     }
 };
 
-exports.updatePaisaje = async (req, res) => {
-  try {
-    await Paisaje.findByIdAndUpdate(req.params.id, req.body);
-    res.redirect('/paisajes');
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
+// Método para procesar la actualización
+exports.actualizarPaisaje = async (req, res) => {
+    try {
+        const { nombre, descripcion, precio } = req.body;
+        const paisaje = await Paisaje.findById(req.params.id);
+
+        if (!paisaje) {
+            return res.redirect('/paisajes?mensaje=Sitio turístico no encontrado&tipo=error');
+        }
+
+        // Actualizar los campos básicos
+        paisaje.nombre = nombre;
+        paisaje.descripcion = descripcion;
+        paisaje.precio = precio;
+
+        // Si hay una nueva imagen, actualizarla
+        if (req.file) {
+            paisaje.imagen = `/uploads/${req.file.filename}`;
+        }
+
+        await paisaje.save();
+        res.redirect('/paisajes?mensaje=Sitio turístico actualizado correctamente&tipo=success');
+    } catch (error) {
+        console.error(error);
+        res.redirect('/paisajes?mensaje=Error al actualizar: ' + error.message + '&tipo=error');
+    }
 };
 
 exports.deletePaisaje = async (req, res) => {
