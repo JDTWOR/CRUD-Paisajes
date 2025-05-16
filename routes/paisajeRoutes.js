@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const upload = require('../config/multerConfig');
 const Paisaje = require('../models/paisajeModel');
+const paisajeModel = require('../models/paisajeModel');
+const paisajeController = require('../controllers/paisajeController');
 
 // Ruta para mostrar todos los paisajes
 router.get('/', async (req, res) => {
@@ -50,5 +52,8 @@ router.post('/agregar', upload.single('imagen'), async (req, res) => {
         res.redirect('/paisajes?mensaje=Error: ' + error.message + '&tipo=error');
     }
 });
+
+//Ruta para ver la información detallada de los sitios
+router.get('/ver/:id', paisajeController.verPaisaje);
 
 module.exports = router;

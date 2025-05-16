@@ -45,3 +45,17 @@ exports.deletePaisaje = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
+
+//metodo para ver informacion detallada del sitio
+exports.verPaisaje = async (req, res) => {
+    try {
+        const paisaje = await Paisaje.findById(req.params.id);
+        if (!paisaje) {
+            return res.redirect('/paisajes?mensaje=Sitio turístico no encontrado&tipo=error');
+        }
+        res.render('paisajes/ver', { paisaje });
+    } catch (error) {
+        console.error(error);
+        res.redirect('/paisajes?mensaje=Error al cargar los detalles&tipo=error');
+    }
+};
