@@ -15,6 +15,12 @@ connectDB();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
+
+const uploadDir = path.join(__dirname, 'public/uploads');
+if (!require('fs').existsSync(uploadDir)){
+    require('fs').mkdirSync(uploadDir, { recursive: true });
+}
 
 // Configuración de vistas
 app.set('views', path.join(__dirname, 'views'));
