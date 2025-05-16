@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Sitio Turístico</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-light">
+    <div class="container">
+        <div class="row my-5">
+            <div class="col-12">
+                <div class="card shadow">
+                    <div class="row g-0">
+                        <div class="col-md-6">
+                            <img src="<%= paisaje.imagen %>" class="img-fluid rounded-start" alt="<%= paisaje.nombre %>" style="height: 100%; object-fit: cover;">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card-body">
+                                <h2 class="card-title mb-4"><%= paisaje.nombre %></h2>
+                                <div class="mb-3">
+                                    <h5 class="text-muted">Descripción</h5>
+                                    <p class="card-text"><%= paisaje.descripcion %></p>
+                                </div>
+                                <div class="mb-4">
+                                    <h5 class="text-muted">Precio</h5>
+                                    <p class="card-text fs-4">$<%= paisaje.precio.toFixed(2) %></p>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <a href="/paisajes" class="btn btn-secondary">
+                                        <i class="fas fa-arrow-left"></i> Volver
+                                    </a>
+                                    <a href="/paisajes/editar/<%= paisaje._id %>" class="btn btn-warning">
+                                        <i class="fas fa-edit"></i> Editar
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
