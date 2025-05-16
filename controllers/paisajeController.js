@@ -19,14 +19,7 @@ exports.createPaisaje = async (req, res) => {
   }
 };
 
-exports.getPaisajeById = async (req, res) => {
-  try {
-    const paisaje = await Paisaje.findById(req.params.id);
-    res.render('paisajes/show', { paisaje });
-  } catch (error) {
-    res.status(404).json({ message: 'Paisaje no encontrado' });
-  }
-};
+
 
 exports.updatePaisaje = async (req, res) => {
   try {
