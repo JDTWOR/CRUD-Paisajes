@@ -59,3 +59,24 @@ exports.verPaisaje = async (req, res) => {
         res.redirect('/paisajes?mensaje=Error al cargar los detalles&tipo=error');
     }
 };
+
+exports.getIndex = async (req, res) => {
+    try {
+        const paisajes = await Paisaje.find();
+        res.render('paisajes/index', {
+            paisajes,
+            activeRoute: 'home',
+            title: 'Listado de Sitios Turísticos'
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error al obtener los paisajes');
+    }
+};
+
+exports.getAgregar = (req, res) => {
+    res.render('paisajes/agregar', {
+        activeRoute: 'agregar',
+        title: 'Agregar Nuevo Sitio'
+    });
+};
