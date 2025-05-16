@@ -19,7 +19,19 @@ exports.createPaisaje = async (req, res) => {
   }
 };
 
-
+// Método para mostrar el formulario de edición
+exports.editarPaisajeForm = async (req, res) => {
+    try {
+        const paisaje = await Paisaje.findById(req.params.id);
+        if (!paisaje) {
+            return res.redirect('/paisajes?mensaje=Sitio turístico no encontrado&tipo=error');
+        }
+        res.render('paisajes/editar', { paisaje });
+    } catch (error) {
+        console.error(error);
+        res.redirect('/paisajes?mensaje=Error al cargar el formulario&tipo=error');
+    }
+};
 
 exports.updatePaisaje = async (req, res) => {
   try {
