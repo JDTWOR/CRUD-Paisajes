@@ -56,4 +56,8 @@ router.post('/agregar', upload.single('imagen'), async (req, res) => {
 //Ruta para ver la información detallada de los sitios
 router.get('/ver/:id', paisajeController.verPaisaje);
 
+// Rutas para edición
+router.get('/editar/:id', paisajeController.editarPaisajeForm);
+router.post('/editar/:id', upload.single('imagen'), paisajeController.actualizarPaisaje);
+
 module.exports = router;
