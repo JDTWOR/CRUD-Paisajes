@@ -25,18 +25,29 @@ router.get('/agregar', (req, res) => {
 // Ruta para procesar el formulario
 router.post('/agregar', upload.single('imagen'), async (req, res) => {
     try {
-        const { nombre, descripcion } = req.body;
+        const { nombre, descripcion, precio } = req.body;
+
+        // Verificar que se haya subido una imagen
+        if (!req.file) {
+            throw new Error('La imagen es obligatoria');
+        }
+
+        // Crear el nuevo paisaje
         const nuevoPaisaje = new Paisaje({
             nombre,
             descripcion,
-            imagen: req.file ? `/uploads/${req.file.filename}` : ''
+            precio: parseFloat(precio),
+            imagen: `/uploads/${req.file.filename}` // Guardamos la ruta relativa
         });
 
+        // Guardar en la base de datos
         await nuevoPaisaje.save();
+
+        // Redireccionar con mensaje de éxito
         res.redirect('/paisajes?mensaje=Sitio turístico agregado correctamente&tipo=success');
     } catch (error) {
         console.error('Error al guardar:', error);
-        res.redirect('/paisajes?mensaje=Error al agregar el sitio turístico&tipo=error');
+        res.redirect('/paisajes?mensaje=Error: ' + error.message + '&tipo=error');
     }
 });
 

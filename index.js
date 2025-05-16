@@ -15,6 +15,7 @@ connectDB();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 
 const uploadDir = path.join(__dirname, 'public/uploads');
 if (!require('fs').existsSync(uploadDir)){

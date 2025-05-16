@@ -26,10 +26,11 @@
                                 <% paisajes.forEach(paisaje => { %>
                                     <div class="col-md-4 mb-4">
                                         <div class="card h-100">
-                                            <img src="<%= paisaje.imagen %>" class="card-img-top" alt="<%= paisaje.nombre %>">
+                                            <img src="<%= paisaje.imagen %>" class="card-img-top" alt="<%= paisaje.nombre %>" style="height: 200px; object-fit: cover;">
                                             <div class="card-body">
                                                 <h5 class="card-title"><%= paisaje.nombre %></h5>
                                                 <p class="card-text"><%= paisaje.descripcion %></p>
+                                                <p class="card-text"><strong>Precio: </strong>$<%= paisaje.precio.toFixed(2) %></p>
                                             </div>
                                             <div class="card-footer bg-transparent border-0">
                                                 <div class="d-flex justify-content-end gap-2">

@@ -3,19 +3,19 @@ const mongoose = require('mongoose');
 const paisajeSchema = new mongoose.Schema({
   nombre: {
     type: String,
-    required: true
+    required: [true, 'El nombre es obligatorio']
+  },
+  precio: {
+    type: Number,
+    required: [true, 'El precio es obligatorio']
   },
   descripcion: {
     type: String,
-    required: true
-  },
-  ubicacion: {
-    type: String,
-    required: true
+    required: [true, 'La descripción es obligatoria']
   },
   imagen: {
     type: String,
-    required: true
+    required: [true, 'La imagen es obligatoria']
   },
   createdAt: {
     type: Date,
