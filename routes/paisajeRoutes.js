@@ -53,6 +53,6 @@ router.post('/agregar', upload.single('imagen'), async (req, res) => {
 });
 
 //Ruta para ver la información detallada de los sitios
-router.ger('/ver/:id', paisajeController.verPaisaje);
+router.get('/ver/:id', paisajeController.verPaisaje);
 
 module.exports = router;
