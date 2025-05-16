@@ -3,6 +3,7 @@ const router = express.Router();
 const upload = require('../config/multerConfig');
 const Paisaje = require('../models/paisajeModel');
 const paisajeModel = require('../models/paisajeModel');
+const paisajeController = require('../controllers/paisajeController');
 
 // Ruta para mostrar todos los paisajes
 router.get('/', async (req, res) => {
