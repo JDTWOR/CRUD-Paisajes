@@ -4,6 +4,8 @@ const express = require('express');
 const path = require('path');
 const connectDB = require('./config/database');
 const paisajeRoutes = require('./routes/paisajeRoutes');
+const expressLayouts = require('express-ejs-layouts');
+const setActiveRoute = require('./middleware/setActiveRoute');
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -16,6 +18,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
+app.use(expressLayouts);
+app.use(setActiveRoute);
 
 const uploadDir = path.join(__dirname, 'public/uploads');
 if (!require('fs').existsSync(uploadDir)){
@@ -25,6 +29,7 @@ if (!require('fs').existsSync(uploadDir)){
 // Configuración de vistas
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+app.set('layout', 'layouts/main');
 
 // Rutas
 app.use('/paisajes', paisajeRoutes);

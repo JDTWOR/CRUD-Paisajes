@@ -9,19 +9,23 @@ const paisajeController = require('../controllers/paisajeController');
 router.get('/', async (req, res) => {
     try {
         const paisajes = await Paisaje.find();
-        res.render('paisajes/index', { 
+        res.render('paisajes/index', {
             paisajes,
-            mensaje: req.query.mensaje,
-            tipo: req.query.tipo 
+            activeRoute: 'home',
+            title: 'Listado de Sitios Turísticos'
         });
     } catch (error) {
+        console.error(error);
         res.status(500).send('Error al obtener los paisajes');
     }
 });
 
 // Ruta para mostrar el formulario de agregar
 router.get('/agregar', (req, res) => {
-    res.render('paisajes/agregar');
+    res.render('paisajes/agregar', {
+        activeRoute: 'agregar',
+        title: 'Agregar Nuevo Sitio'
+    });
 });
 
 // Ruta para procesar el formulario
@@ -54,7 +58,24 @@ router.post('/agregar', upload.single('imagen'), async (req, res) => {
 });
 
 //Ruta para ver la información detallada de los sitios
-router.get('/ver/:id', paisajeController.verPaisaje);
+router.get('/ver/:id', async (req, res) => {
+    try {
+        const paisaje = await Paisaje.findById(req.params.id);
+        
+        if (!paisaje) {
+            return res.status(404).redirect('/paisajes?mensaje=Paisaje no encontrado&tipo=error');
+        }
+
+        res.render('paisajes/ver', {
+            paisaje,
+            activeRoute: 'ver',
+            title: `Detalles de ${paisaje.nombre}`
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).redirect('/paisajes?mensaje=Error al cargar el paisaje&tipo=error');
+    }
+});
 
 // Rutas para edición
 router.get('/editar/:id', paisajeController.editarPaisajeForm);
