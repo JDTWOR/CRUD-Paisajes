@@ -77,4 +77,8 @@ router.get('/ver/:id', async (req, res) => {
     }
 });
 
+// Rutas para edición
+router.get('/editar/:id', paisajeController.editarPaisajeForm);
+router.post('/editar/:id', upload.single('imagen'), paisajeController.actualizarPaisaje);
+
 module.exports = router;
