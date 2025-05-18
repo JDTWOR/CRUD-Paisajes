@@ -81,4 +81,7 @@ router.get('/ver/:id', async (req, res) => {
 router.get('/editar/:id', paisajeController.editarPaisajeForm);
 router.post('/editar/:id', upload.single('imagen'), paisajeController.actualizarPaisaje);
 
+// Ruta para eliminar un paisaje
+router.get('/eliminar/:id', paisajeController.deletePaisaje);
+
 module.exports = router;
