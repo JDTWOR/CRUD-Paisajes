@@ -10,15 +10,25 @@ exports.getAllPaisajes = async (req, res) => {
 };
 
 exports.createPaisaje = async (req, res) => {
-  try {
-    const paisaje = new Paisaje(req.body);
-    await paisaje.save();
-    res.redirect('/paisajes');
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-};
+    try {
+        if (!req.file) {
+            return res.redirect('/paisajes/agregar?mensaje=La imagen es obligatoria&tipo=error');
+        }
 
+        const nuevoPaisaje = new Paisaje({
+            nombre: req.body.nombre,
+            descripcion: req.body.descripcion,
+            precio: req.body.precio,
+            imagen: `/uploads/${req.file.filename}` // Asegúrate de que esta ruta sea correcta
+        });
+
+        await nuevoPaisaje.save();
+        res.redirect('/paisajes?mensaje=Sitio turístico agregado correctamente&tipo=success');
+    } catch (error) {
+        console.error('Error:', error);
+        res.redirect('/paisajes/agregar?mensaje=' + error.message + '&tipo=error');
+    }
+};
 // Método para mostrar el formulario de edición
 exports.editarPaisajeForm = async (req, res) => {
     try {

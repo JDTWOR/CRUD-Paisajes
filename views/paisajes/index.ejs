@@ -51,20 +51,19 @@
                                             </div>
                                             <div class="card-footer bg-transparent border-0">
                                                 <div class="d-flex justify-content-end gap-2">
-                                                    <a href="/paisajes/ver/<%= paisaje._id %>"
-                                                        class="btn btn-info btn-sm">
+                                                    <a href="/paisajes/ver/<%= paisaje._id %>" class="btn btn-info btn-sm">
                                                         <i class="fas fa-eye"></i> Ver
                                                     </a>
-                                                    <a href="/paisajes/editar/<%= paisaje._id %>"
-                                                        class="btn btn-warning btn-sm">
-                                                        <i class="fas fa-edit"></i> Editar
-                                                    </a>
-                                                    <!-- Cambia el enlace de eliminar por un botón -->
-                                                    <a href="javascript:void(0)" 
-                                                       onclick="confirmarEliminacion('<%= paisaje._id %>')"
-                                                       class="btn btn-danger btn-sm">
-                                                        <i class="fas fa-trash"></i> Eliminar
-                                                    </a>
+                                                    <% if (user.isAdmin) { %>
+                                                        <a href="/paisajes/editar/<%= paisaje._id %>" class="btn btn-warning btn-sm">
+                                                            <i class="fas fa-edit"></i> Editar
+                                                        </a>
+                                                        <a href="javascript:void(0)" 
+                                                           onclick="confirmarEliminacion('<%= paisaje._id %>')"
+                                                           class="btn btn-danger btn-sm">
+                                                            <i class="fas fa-trash"></i> Eliminar
+                                                        </a>
+                                                    <% } %>
                                                 </div>
                                             </div>
                                         </div>
