@@ -51,18 +51,19 @@
                                             </div>
                                             <div class="card-footer bg-transparent border-0">
                                                 <div class="d-flex justify-content-end gap-2">
-                                                    <a href="/paisajes/ver/<%= paisaje._id %>"
-                                                        class="btn btn-info btn-sm">
+                                                    <a href="/paisajes/ver/<%= paisaje._id %>" class="btn btn-info btn-sm">
                                                         <i class="fas fa-eye"></i> Ver
                                                     </a>
-                                                    <a href="/paisajes/editar/<%= paisaje._id %>"
-                                                        class="btn btn-warning btn-sm">
-                                                        <i class="fas fa-edit"></i> Editar
-                                                    </a>
-                                                    <a href="/paisajes/eliminar/<%= paisaje._id %>"
-                                                        class="btn btn-danger btn-sm">
-                                                        <i class="fas fa-trash"></i> Eliminar
-                                                    </a>
+                                                    <% if (user.isAdmin) { %>
+                                                        <a href="/paisajes/editar/<%= paisaje._id %>" class="btn btn-warning btn-sm">
+                                                            <i class="fas fa-edit"></i> Editar
+                                                        </a>
+                                                        <a href="javascript:void(0)" 
+                                                           onclick="confirmarEliminacion('<%= paisaje._id %>')"
+                                                           class="btn btn-danger btn-sm">
+                                                            <i class="fas fa-trash"></i> Eliminar
+                                                        </a>
+                                                    <% } %>
                                                 </div>
                                             </div>
                                         </div>
@@ -100,6 +101,24 @@
                 // Limpia los parámetros de la URL
                 window.history.replaceState({}, document.title, window.location.pathname);
             }
+        }
+
+        function confirmarEliminacion(id) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "Esta acción no se puede deshacer",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#dc3545',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Redirigir a la ruta de eliminación
+                    window.location.href = `/paisajes/eliminar/${id}`;
+                }
+            });
         }
     </script>
 </body>

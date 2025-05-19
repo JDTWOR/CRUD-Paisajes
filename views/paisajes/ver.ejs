@@ -34,9 +34,11 @@
                                     <a href="/paisajes" class="btn btn-secondary">
                                         <i class="fas fa-arrow-left"></i> Volver
                                     </a>
-                                    <a href="/paisajes/editar/<%= paisaje._id %>" class="btn btn-warning">
-                                        <i class="fas fa-edit"></i> Editar
-                                    </a>
+                                    <% if (user.isAdmin) { %>
+                                        <a href="/paisajes/editar/<%= paisaje._id %>" class="btn btn-warning">
+                                            <i class="fas fa-edit"></i> Editar
+                                        </a>
+                                    <% } %>
                                 </div>
                             </div>
                         </div>

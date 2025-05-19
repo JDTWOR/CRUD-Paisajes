@@ -10,15 +10,25 @@ exports.getAllPaisajes = async (req, res) => {
 };
 
 exports.createPaisaje = async (req, res) => {
-  try {
-    const paisaje = new Paisaje(req.body);
-    await paisaje.save();
-    res.redirect('/paisajes');
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-};
+    try {
+        if (!req.file) {
+            return res.redirect('/paisajes/agregar?mensaje=La imagen es obligatoria&tipo=error');
+        }
 
+        const nuevoPaisaje = new Paisaje({
+            nombre: req.body.nombre,
+            descripcion: req.body.descripcion,
+            precio: req.body.precio,
+            imagen: `/uploads/${req.file.filename}` // Asegúrate de que esta ruta sea correcta
+        });
+
+        await nuevoPaisaje.save();
+        res.redirect('/paisajes?mensaje=Sitio turístico agregado correctamente&tipo=success');
+    } catch (error) {
+        console.error('Error:', error);
+        res.redirect('/paisajes/agregar?mensaje=' + error.message + '&tipo=error');
+    }
+};
 // Método para mostrar el formulario de edición
 exports.editarPaisajeForm = async (req, res) => {
     try {
@@ -62,12 +72,29 @@ exports.actualizarPaisaje = async (req, res) => {
 };
 
 exports.deletePaisaje = async (req, res) => {
-  try {
-    await Paisaje.findByIdAndDelete(req.params.id);
-    res.redirect('/paisajes');
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
+    try {
+        const paisaje = await Paisaje.findByIdAndDelete(req.params.id);
+        
+        if (!paisaje) {
+            return res.redirect('/paisajes?mensaje=Sitio turístico no encontrado&tipo=error');
+        }
+
+        // Si hay una imagen asociada, eliminarla del servidor
+        if (paisaje.imagen) {
+            const path = require('path');
+            const fs = require('fs');
+            const imagePath = path.join(__dirname, '..', 'public', paisaje.imagen);
+            
+            if (fs.existsSync(imagePath)) {
+                fs.unlinkSync(imagePath);
+            }
+        }
+
+        res.redirect('/paisajes?mensaje=Sitio turístico eliminado correctamente&tipo=success');
+    } catch (error) {
+        console.error('Error al eliminar:', error);
+        res.redirect('/paisajes?mensaje=Error al eliminar el sitio turístico&tipo=error');
+    }
 };
 
 //metodo para ver informacion detallada del sitio
