@@ -59,8 +59,10 @@
                                                         class="btn btn-warning btn-sm">
                                                         <i class="fas fa-edit"></i> Editar
                                                     </a>
-                                                    <a href="/paisajes/eliminar/<%= paisaje._id %>"
-                                                        class="btn btn-danger btn-sm">
+                                                    <!-- Cambia el enlace de eliminar por un botón -->
+                                                    <a href="javascript:void(0)" 
+                                                       onclick="confirmarEliminacion('<%= paisaje._id %>')"
+                                                       class="btn btn-danger btn-sm">
                                                         <i class="fas fa-trash"></i> Eliminar
                                                     </a>
                                                 </div>
@@ -100,6 +102,24 @@
                 // Limpia los parámetros de la URL
                 window.history.replaceState({}, document.title, window.location.pathname);
             }
+        }
+
+        function confirmarEliminacion(id) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "Esta acción no se puede deshacer",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#dc3545',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Redirigir a la ruta de eliminación
+                    window.location.href = `/paisajes/eliminar/${id}`;
+                }
+            });
         }
     </script>
 </body>
